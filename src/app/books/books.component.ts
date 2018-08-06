@@ -20,8 +20,8 @@ export class BooksComponent implements OnInit {
   mySelected: Ibook;
   isSaved = false;
   isError = false;
-  search:string;
-
+  search: string;
+  i = 0;
 
 
 
@@ -47,11 +47,15 @@ export class BooksComponent implements OnInit {
     this.isError = false;
   }
   saveBook(event) {
+    this.i = 0;
     this.mySelected = event;
     this.books.forEach(element => {
-      element.author = event.author;
-      element.Published = event.published;
+      if (element.title == event.title) {
+        element.author = event.author;
+        element.Published = event.Published;
 
+      }
+      this.i++;
 
     });
     this.isSaved = true;
@@ -96,10 +100,9 @@ export class BooksComponent implements OnInit {
     element.Published = moment(new Date(element.Published)).format('MM/DD/YYYY');
     this.profileForm = this.fb.group({
       author: [element.author, Validators.pattern(this.patternForString)],
-      published: [element.Published, Validators.pattern(this.date_regex)],
+      Published: [element.Published, Validators.pattern(this.date_regex)],
       pic: [element.pic],
-      title: [element.title],
-      id: [element.id]
+      title: [element.title]
     });
 
 
